@@ -18,12 +18,32 @@
 
 
 import pyfprint as FP
-from FingerStore import FingerStore as FingerStore
-#from FingerStoreMySQL import FingerStoreMySQL as FingerStore
-from FingerStoreMongoDB import FingerStoreMongoDB as FingerStore
 
 TIMEOUT=60
 SERVERURL='http://192.168.123.102:3000'
+# /questions /answers /comments /protests /tto
+URLSUFFIX=''
+
+from configuration import configuration
+_cfg=configuration()
+_conf=_cfg.get('FingerAuth')
+SERVERURL=_conf.get('url', SERVERURL)
+URLSUFFIX=_conf.get('urlsuffix', URLSUFFIX)
+try:
+    TIMEOUT=int(_conf.get('timeout', str(TIMEOUT)))
+except ValueError:
+    pass
+
+BACKEND=_conf.get('fingerstore')
+
+
+if 'MongoDB' == BACKEND:
+    from FingerStoreMongoDB import FingerStoreMongoDB as FingerStore
+elif 'MySQL' == BACKEND:
+    from FingerStoreMySQL import FingerStoreMySQL as FingerStore
+else:
+    from FingerStore import FingerStore as FingerStore
+
 
 FP.fp_init()
 import atexit
@@ -99,6 +119,7 @@ if '__main__' == __name__:
     parser=argparse.ArgumentParser()
     parser.add_argument('-t', '--timeout', type=int, default=TIMEOUT, help='timeout for re-authenticating the same user (default: %s)' % (TIMEOUT))
     parser.add_argument('-u', '--url', type=str, default=SERVERURL, help='base-url (default: %s)' % (SERVERURL))
+    parser.add_argument('-s', '--suffix', type=str, default=URLSUFFIX, help='url-suffix (default: %s)' % (URLSUFFIX))
     args=parser.parse_args()
     fa=FingerAuth()
     test=True
@@ -128,7 +149,7 @@ if '__main__' == __name__:
                 id5=hashlib.md5(id).hexdigest()
                 print("FingerPrint: %s [%s]" % (id, id5))
                 #print("data: %s" % (fa.fingerprints._store))
-                os.system("./rechrome.sh %s/finger/%s/" % (args.url, id5))
+                os.system("./rechrome.sh %s/finger/%s%s" % (args.url, id5, args.suffix))
 
             #time.sleep(2)
             #print("awake!")
