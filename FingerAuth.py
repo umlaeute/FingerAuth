@@ -20,7 +20,7 @@
 import pyfprint as FP
 
 TIMEOUT=60
-SERVERURL='http://192.168.123.102:3000'
+SERVERURL='https://google.com/&q='
 # /questions /answers /comments /protests /tto
 URLSUFFIX=''
 
