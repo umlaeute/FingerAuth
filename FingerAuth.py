@@ -24,6 +24,9 @@ SERVERURL='https://google.com/&q='
 # /questions /answers /comments /protests /tto
 URLSUFFIX=''
 
+import os.path
+BROWSER=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'rechrome.sh')
+
 from configuration import configuration
 _cfg=configuration()
 _conf=_cfg.get('FingerAuth')
@@ -120,12 +123,13 @@ if '__main__' == __name__:
     parser.add_argument('-t', '--timeout', type=int, default=TIMEOUT, help='timeout for re-authenticating the same user (default: %s)' % (TIMEOUT))
     parser.add_argument('-u', '--url', type=str, default=SERVERURL, help='base-url (default: %s)' % (SERVERURL))
     parser.add_argument('-s', '--suffix', type=str, default=URLSUFFIX, help='url-suffix (default: %s)' % (URLSUFFIX))
+    parser.add_argument('-B', '--browser', type=str, default=BROWSER, help='browser used to launch pages (default: %s)' % (BROWSER))
     args=parser.parse_args()
     fa=FingerAuth()
     test=True
     test=False
 
-    os.system("./rechrome.sh %s/" % (args.url))
+    os.system("%s %s/" % (BROWSER, args.url))
     if not test:
         lastid=None
         lasttime=0
@@ -149,7 +153,7 @@ if '__main__' == __name__:
                 id5=hashlib.md5(id).hexdigest()
                 print("FingerPrint: %s [%s]" % (id, id5))
                 #print("data: %s" % (fa.fingerprints._store))
-                os.system("./rechrome.sh %s/finger/%s%s" % (args.url, id5, args.suffix))
+                os.system("%s %s/finger/%s%s" % (BROWSER, args.url, id5, args.suffix))
 
             #time.sleep(2)
             #print("awake!")
