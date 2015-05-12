@@ -2,4 +2,4 @@
 
 pkill -KILL chromium
 
-chromium --kiosk --app=$1 &
+chromium --use-fake-ui-for-media-stream --kiosk --app=$1 &
