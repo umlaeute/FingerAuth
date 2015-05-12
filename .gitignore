@@ -1,0 +1,4 @@
+*~
+/__pycache__/
+## this holds potentially sensitive data:
+FingerAuth.conf
