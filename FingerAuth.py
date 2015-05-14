@@ -60,6 +60,8 @@ class FingerAuth():
         """
         self.device=None
         devs=FP.discover_devices()
+        if not devs:
+            raise Exception("no devices found")
         if device is None:
             self.device=devs[0]
         elif FP.Device == type(device):
