@@ -92,6 +92,7 @@ class FingerAuth():
         """
         fps_raw=self.fingerprints.getTokens()
         fps=[FP.Fprint(x) for x in fps_raw]
+        fps_count=len(fps)
 
         ## if identification fails, try again to avoid false negatives
         count=3
@@ -104,7 +105,7 @@ class FingerAuth():
                 break
             count-=1
         if not fp:
-            print("not found %s; enrolling new finger" % (state))
+            print("not found in %s (%s); enrolling new finger" % (fps_count, state))
             fp,img=self.device.enroll_finger()
             if defaultID is not None:
                 defaultID=self.fingerprints.addID(defaultID, bytes(fp.data()))
