@@ -138,33 +138,37 @@ if '__main__' == __name__:
     if not test:
         lastid=None
         lasttime=0
-        while(True):
-            ids=[]
-            u=uuid.uuid4().bytes
-            id=fa.auth_or_add(defaultID=u)
-            if lastid == id:
-                ## filter-out duplicate login attempts
-                now=time.time()
-                if (now-lasttime) < args.timeout:
-                    print("ignoring attempt to re-authenticate")
-                    lasttime=now
-                    continue
-            if id:
-                lastid=id
-                lasttime=time.time()
-                if type(id) == str:
-                    id=bytes(id, 'utf-8')
-                print("ID: %s\t%s" % (type(id), id))
-                id5=hashlib.md5(id).hexdigest()
-                print("FingerPrint: %s [%s]" % (id, id5))
-                #print("data: %s" % (fa.fingerprints._store))
-                os.system("%s %s/finger/%s%s" % (BROWSER, args.url, id5, args.suffix))
+        try:
+            while(True):
+                ids=[]
+                u=uuid.uuid4().bytes
+                id=fa.auth_or_add(defaultID=u)
+                if lastid == id:
+                    ## filter-out duplicate login attempts
+                    now=time.time()
+                    if (now-lasttime) < args.timeout:
+                        print("ignoring attempt to re-authenticate")
+                        lasttime=now
+                        continue
+                if id:
+                    lastid=id
+                    lasttime=time.time()
+                    if type(id) == str:
+                        id=bytes(id, 'utf-8')
+                    print("ID: %s\t%s" % (type(id), id))
+                    id5=hashlib.md5(id).hexdigest()
+                    print("FingerPrint: %s [%s]" % (id, id5))
+                    #print("data: %s" % (fa.fingerprints._store))
+                    os.system("%s %s/finger/%s%s" % (BROWSER, args.url, id5, args.suffix))
 
-            #time.sleep(2)
-            #print("awake!")
+                #time.sleep(2)
+                #print("awake!")
+        except KeyboardInterrupt:
+            pass
     else:
         #fa.test()
         tokens=fa.fingerprints.getTokens()
         for t in tokens:
             print("Token: %s" % (type(t)))
 
+    print("GoodBye")
