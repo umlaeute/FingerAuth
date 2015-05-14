@@ -161,7 +161,7 @@ if '__main__' == __name__:
                     id5=hashlib.md5(id).hexdigest()
                     print("FingerPrint: %s [%s]" % (id, id5))
                     #print("data: %s" % (fa.fingerprints._store))
-                    os.system("%s %s/finger/%s%s" % (BROWSER, args.url, id5, args.suffix))
+                    os.system("%s %s%s%s" % (BROWSER, args.url, id5, args.suffix))
 
                 #time.sleep(2)
                 #print("awake!")
