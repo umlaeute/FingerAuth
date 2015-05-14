@@ -1,6 +1,7 @@
 #!/bin/sh
 
-sudo aptitude install libfprint-dev
-sudo aptitude install python3-cffi
+sudo aptitude install -y libfprint-dev
+sudo aptitude install -y python3-cffi
+sudo aptitude install -y python3-pymongo
 git clone https://github.com/franciscod/pyfprint-cffi.git
 
