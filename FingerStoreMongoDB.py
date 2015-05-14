@@ -37,8 +37,8 @@ class FingerStoreMongoDB(FingerStore.FingerStore):
     """
     def __init__(self):
         self._client = pymongo.MongoClient(**_credentials)
-        self._db = self._client.test
-        self._coll = self._db.my_collection
+        self._db = self._client.FingerAuth
+        self._coll = self._db.FingerPrints
 
     def addID(self, ID, token):
         """
