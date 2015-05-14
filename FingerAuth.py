@@ -97,7 +97,11 @@ class FingerAuth():
         ## if identification fails, try again to avoid false negatives
         count=3
         while count>0:
-            i,fp,img,state=self.device.identify_finger(fps)
+            try:
+                i,fp,img,state=self.device.identify_finger(fps)
+            except FP.FprintException as e:
+                print("unable to identify finger: %s" % (e))
+                return None
             #print("#%s: (%s,%s,%s,%s)" % (count, i, fp, img, state))
             if state >= FP.VERIFY_RETRY:
                 return None
