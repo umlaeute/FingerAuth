@@ -36,6 +36,7 @@ class FingerStoreMongoDB(FingerStore.FingerStore):
     and/or distributed (e.g. database-server)
     """
     def __init__(self):
+        print("MongoDB cred: %s" % (_credentials))
         self._client = pymongo.MongoClient(**_credentials)
         self._db = self._client.FingerAuth
         self._coll = self._db.FingerPrints

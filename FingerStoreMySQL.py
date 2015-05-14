@@ -34,7 +34,7 @@ class FingerStoreMySQL(FingerStore.FingerStore):
     and/or distributed (e.g. database-server)
     """
     def __init__(self):
-        print("cred: %s" % (_credentials))
+        print("MySQL cred: %s" % (_credentials))
         self._db=mysql.connector.connect(**_credentials)
 
     def addID(self, ID, token):
