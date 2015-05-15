@@ -95,6 +95,7 @@ class FingerAuth():
         fps_raw=self.fingerprints.getTokens()
         fps=[FP.Fprint(x) for x in fps_raw]
         fps_count=len(fps)
+        print("searching for fingerprint in %s known ones" % (fps_count))
 
         ## if identification fails, try again to avoid false negatives
         count=3
