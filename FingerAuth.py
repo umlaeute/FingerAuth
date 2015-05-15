@@ -155,9 +155,10 @@ if '__main__' == __name__:
                 if id:
                     lastid=id
                     lasttime=time.time()
+                    print("ID: '%s'\t'%s'" % (type(id), id))
                     if type(id) == str:
                         id=bytes(id, 'utf-8')
-                    print("ID: %s\t%s" % (type(id), id))
+                        print("ID: '%s'\t'%s'" % (type(id), id))
                     id5=hashlib.md5(id).hexdigest()
                     print("FingerPrint: %s [%s]" % (id, id5))
                     #print("data: %s" % (fa.fingerprints._store))
