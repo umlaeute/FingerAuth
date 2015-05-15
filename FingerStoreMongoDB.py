@@ -19,7 +19,7 @@
 import pymongo
 import bson.objectid
 import FingerStore
-
+import time
 
 from configuration import configuration
 _cfg=configuration()
@@ -38,8 +38,12 @@ class FingerStoreMongoDB(FingerStore.FingerStore):
     def __init__(self):
         print("MongoDB cred: %s" % (_credentials))
         self._client = pymongo.MongoClient(**_credentials)
+        time.sleep(0.1)
+        if not self._client.nodes:
+            raise(Exception("unable to connect to %s" % (self._client))
         self._db = self._client.FingerAuth
         self._coll = self._db.FingerPrints
+        print("connected to: %s" % (self._coll))
 
     def addID(self, ID, token):
         """
