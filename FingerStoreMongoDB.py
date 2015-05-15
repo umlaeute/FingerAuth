@@ -25,6 +25,10 @@ from configuration import configuration
 _cfg=configuration()
 _credentials=_cfg.get('MongoDB')
 
+def _debugDB(client, db, coll):
+    print("MongoDB: %s" % (coll))
+    print("DBs: %s" % (self._client.database_names()))
+    print("cols: %s" % (self._db.collection_names()))
 
 class FingerStoreMongoDB(FingerStore.FingerStore):
     """
@@ -43,7 +47,9 @@ class FingerStoreMongoDB(FingerStore.FingerStore):
             raise(Exception("unable to connect to %s" % (self._client)))
         self._db = self._client.FingerAuth
         self._coll = self._db.FingerPrints
-        print("connected to: %s" % (self._coll))
+        self._debugDB()
+    def _debugDB(self):
+        _debugDB(self._client, self._db, self._coll)
 
     def addID(self, ID, token):
         """
@@ -51,6 +57,8 @@ class FingerStoreMongoDB(FingerStore.FingerStore):
         returns the <ID> (might be different from the one requested)
         """
         ## we just forget about the ID for now
+        print("addingID: '%s' (maybe)" % (ID))
+        self._debugDB()
         ID = self._coll.insert_one({'fingerprint': token}).inserted_id
         return str(ID)
     def getID(self, token):
