@@ -59,7 +59,10 @@ class FingerStoreMongoDB(FingerStore.FingerStore):
         ## we just forget about the ID for now
         print("addingID: '%s' (maybe)" % (ID))
         self._debugDB()
-        ID = self._coll.insert_one({'fingerprint': token}).inserted_id
+        ## this only works for pymongo>=3
+        #ID = self._coll.insert_one({'fingerprint': token}).inserted_id
+        ## that's the old (pymongo<=2) and deprecated way
+        ID=self._coll.insert({'fingerprint': token})
         return str(ID)
     def getID(self, token):
         """
