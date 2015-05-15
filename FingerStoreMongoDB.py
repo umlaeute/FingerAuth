@@ -26,9 +26,9 @@ _cfg=configuration()
 _credentials=_cfg.get('MongoDB')
 
 def _debugDB(client, db, coll):
-    print("MongoDB: %s" % (coll))
-    print("DBs: %s" % (self._client.database_names()))
-    print("cols: %s" % (self._db.collection_names()))
+    print("MongoDB: %s" % ((client,db,coll)))
+    print("DBs: %s" % (client.database_names()))
+    print("cols: %s" % (db.collection_names()))
 
 class FingerStoreMongoDB(FingerStore.FingerStore):
     """
