@@ -127,6 +127,7 @@ class FingerAuth():
             id=bytes(id, 'utf-8')
         id5=hashlib.md5(id).hexdigest()
         filename=('pics/%s.pgm' % id5)
+        img.standardize()
         try:
             img.save_to_file(filename)
         except FP.FprintException:
