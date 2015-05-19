@@ -18,6 +18,7 @@
 
 
 import pyfprint as FP
+import hashlib
 
 TIMEOUT=60
 SERVERURL='https://google.com/&q='
@@ -116,16 +117,25 @@ class FingerAuth():
             fp,img=self.device.enroll_finger()
             if defaultID is not None:
                 defaultID=self.fingerprints.addID(defaultID, bytes(fp.data()))
+            self.saveFingerImage(img, defaultID)
             return defaultID
         id=self.fingerprints.getID(fps_raw[i])
         return id
+    def saveFingerImage(self, img, id):
+        if type(id) == str:
+            id=bytes(id, 'utf-8')
+        id5=hashlib.md5(id).hexdigest()
+        filename=('pics/%s.pgm' % id5)
+        try:
+            img.save_to_file(filename)
+        except FP.FprintException:
+            print("failed to save '%s'" % (filename,))
 
 if '__main__' == __name__:
     import os
     import uuid
     import time
     import collections
-    import hashlib
     import argparse
     parser=argparse.ArgumentParser()
     parser.add_argument('-t', '--timeout', type=int, default=TIMEOUT, help='timeout for re-authenticating the same user (default: %s)' % (TIMEOUT))
