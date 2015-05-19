@@ -17,6 +17,7 @@ done
 }
 
 mkdir -p logs
+mkdir -p pics
 
 export PYTHONUNBUFFERED=1
 loop | tee "logs/Oracle-${TIMESTAMP}.log" 
