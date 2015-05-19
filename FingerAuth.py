@@ -117,7 +117,8 @@ class FingerAuth():
             fp,img=self.device.enroll_finger()
             if defaultID is not None:
                 defaultID=self.fingerprints.addID(defaultID, bytes(fp.data()))
-            self.saveFingerImage(img, defaultID)
+            if img:
+                self.saveFingerImage(img, defaultID)
             return defaultID
         id=self.fingerprints.getID(fps_raw[i])
         return id
