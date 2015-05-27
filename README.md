@@ -1,6 +1,19 @@
 The Tech Oracle - FingerAuth agent
 ==================================
 
+ /$$$$$$$$ /$$$$$$$$ /$$$$$$
+|__  $$__/|__  $$__//$$__  $$
+   | $$      | $$  | $$  \ $$
+   | $$      | $$  | $$  | $$
+   | $$      | $$  | $$  | $$
+   | $$      | $$  | $$  | $$
+   | $$      | $$  |  $$$$$$/
+   |__/      |__/   \______/
+
+
+FingerAuth agent
+================
+
 Simple script that continuously reads data from a fingerprint reader.
 
 When a fingerprint is detected, it compares to a number of stored fingerprints
